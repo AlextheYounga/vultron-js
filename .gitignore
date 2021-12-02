@@ -30,7 +30,6 @@ patches/modules
 graveyard
 *.db
 src/database/*.db
-src/database/schema.json
 vultron.db
 tests
 credentials.json
