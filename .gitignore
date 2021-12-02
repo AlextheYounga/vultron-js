@@ -29,6 +29,7 @@ imports/*
 patches/modules
 graveyard
 *.db
+src/database/*.db
 vultron.db
 tests
 credentials.json
