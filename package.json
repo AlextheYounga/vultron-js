@@ -1,0 +1,90 @@
+{
+  "name": "vultron-js",
+  "author": "Alex Younger <@alex@alextheyounger.me> (https://www.alextheyounger.me/)",
+  "license": "UNLICENSED",
+  "version": "0.1.0",
+  "private": false,
+  "keywords": ["electron", "vue", "bookshelf", "knex", "sql", "mvc", "framework"],
+  "engines": {
+    "npm": "14.18.0"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
+  },
+  "main": "background.js",
+  "dependencies": {
+    "@headlessui/vue": "^1.4.1",
+    "@heroicons/vue": "^1.0.4",
+    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@tailwindcss/typography": "^0.4.1",
+    "@vuelidate/core": "^2.0.0-alpha.26",
+    "@vuelidate/validators": "^2.0.0-alpha.22",
+    "autoprefixer": "^9",
+    "aws-sdk": "^2.992.0",
+    "axios": "^0.21.3",
+    "babel-preset-es2015": "^6.24.1",
+    "bcryptjs": "^2.4.3",
+    "bookshelf": "^1.2.0",
+    "bookshelf-encrypt-columns": "^0.1.0",
+    "bookshelf-json-columns": "^3.0.0",
+    "core-js": "^3.6.5",
+    "knex": "^0.95.14",
+    "light-date": "^1.2.0",
+    "lodash": "^4.17.21",
+    "mock-aws-s3": "^4.0.2",
+    "nock": "^13.1.3",
+    "node-credentials": "^1.3.1",
+    "pluralize": "^8.0.0",
+    "postcss": "^7",
+    "sass": "^1.39.0",
+    "sqlite3": "^5.0.2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
+    "uuid": "^8.3.2",
+    "vue": "^3.0.0",
+    "vue-loader": "^15.9.8",
+    "vue-router": "^4.0.11",
+    "vue-template-compiler": "^2.6.14",
+    "vue3-storage": "^0.1.11",
+    "webpack": "4.1.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "^3.1.1",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-service": "^4.5.13",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-eslint": "^10.1.0",
+    "electron": "^14.0.0",
+    "electron-devtools-installer": "^3.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0",
+    "vue-cli-plugin-electron-builder": "~2.1.1",
+    "vue-cli-plugin-tailwind": "~2.0.6"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
