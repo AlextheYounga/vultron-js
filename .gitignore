@@ -28,7 +28,8 @@ pnpm-debug.log*
 imports/*
 patches/modules
 graveyard
-lucriv.db
+*.db
+vultron.db
 tests
 credentials.json
 credentials.json.key

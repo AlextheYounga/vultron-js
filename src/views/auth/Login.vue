@@ -119,7 +119,7 @@
             async submit() {
                 const isFormCorrect = await this.v$.$validate()
                 if (isFormCorrect) {
-                    let user = this.$api.sendSync('login', { username: this.$data.form.username, password: this.$data.form.password })
+                    let user = this.$api.sendSync('login', { username: this.$data.form.username, password: this.$data.form.password }) //Calling ipcMain login endpoint
                     if (!user) return
                     if (user instanceof Error) {
                         this.$data.notFound = user.message

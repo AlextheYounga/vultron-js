@@ -124,7 +124,6 @@ if (fs.existsSync(dbconfig.connection.filename) == false) {
 	}
 }
 
-// TODO: Error check this
 
 // Retrieves columns from a table
 async function getColumns(table) {
