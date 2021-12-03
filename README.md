@@ -20,7 +20,7 @@ yarn run electron:build
 The magic happens in the server folder, which uses Electron's [ipcMain](https://www.electronjs.org/docs/latest/api/ipc-main) module to create a backend-to-frontend api. 
 
 You create your controllers with this strategy:
-```
+```javascript
 const User = require('../../models/User')
 
 const AuthController = {
@@ -42,7 +42,7 @@ export default AuthController
 You place your functions in the controller object, and just specify which functions you want to appear as callable endpoints in Electron's ipcMain module.
 
 From the frontend you will use the this.$api global variable of ipcRenderer to fire ipcMain events like this: 
-```
+```javascript
 this.$api.on('login', (event, arg) => { //function that fires when a response is received from 'login' event
 	let user = arg
 	if (!user) return
@@ -63,7 +63,7 @@ this.$api.send('login', {  // fire login call to ipcMain
 These calls are asynchronous because Javascript (if you're new to Javascript just get used to the messy cody blocks that come from async functions). You'll have to keep this in mind when building out your Vue frontends.
 Here's an example of passing data to a Vue template on page load. 
 
-```
+```vue
 <template>
 <p v-if="apiValue"> {{ apiValue }} </p> //The v-if will handle the null value, so it won't show until the value is returned.
 </template>
@@ -91,7 +91,7 @@ Here's an example of passing data to a Vue template on page load.
 ## Models
 Your models are handled by a combination of knex.js & bookshelf.js, (which is an extension of knex). If you come from a Laravel/Rails background, you will love how nice your models are. 
 
-```
+```javascript
 const bookshelf = require('../database/bookshelf');
 const User = require('./User.js');
 
@@ -128,7 +128,7 @@ I don't know about you, but I hate building out forms, going back and forth to f
 For the frontend, we use Vue and Tailwind, which is a really fun combination. 
 I have included a few global variables you can use by default in main.js: 
 
-```
+```javascript
 app.config.globalProperties.$http = () => axios
 app.config.globalProperties.$api = ipcRenderer
 app.config.globalProperties.$schema = schema
