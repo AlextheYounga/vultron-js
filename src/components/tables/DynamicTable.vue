@@ -57,7 +57,6 @@
 
 <script>
     import StatusBubble from '../fields/StatusBubble.vue'
-    import '../../prototypes'
 
     export default {
         components: {
@@ -88,7 +87,7 @@
                     if (['id', 'created_at', 'updated_at'].includes(field) == false) {
                         structure.push({
                             ...field,
-                            header: field.name.formatFieldName()
+                            header: this.$helpers.formatFieldName(field.name)
                         })
                     }
                 }

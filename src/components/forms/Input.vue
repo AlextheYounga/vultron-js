@@ -30,7 +30,6 @@
 </template>
 
 <script>
-    import '../../prototypes.js'
     export default {
         props: {
             modelValue: String,
@@ -82,7 +81,7 @@
                 let type = this.$props.type
                 if (modelVal) {
                     if (type == 'date') {
-                        return (modelVal.formattedDate())
+                        return (this.$helpers.formattedDate(modelVal))
                     }
                     return modelVal
                 }

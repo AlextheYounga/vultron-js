@@ -119,16 +119,24 @@
             async submit() {
                 const isFormCorrect = await this.v$.$validate()
                 if (isFormCorrect) {
-                    let user = this.$api.sendSync('login', { username: this.$data.form.username, password: this.$data.form.password }) //Calling ipcMain login endpoint
-                    if (!user) return
-                    if (user instanceof Error) {
-                        this.$data.notFound = user.message
-                        return
-                    }
-                    if (user.id) {
-                        this.$router.push('dashboard')
-                    }
-
+                    /*
+                    * Electron ipcMain example 
+                    */
+                    this.$api.on('login', (event, arg) => { //function that fires when a response is received from 'login' event
+                        let user = arg
+                        if (!user) return
+                        if (user instanceof Error) { // Error handling
+                            this.$data.notFound = user.message
+                            return
+                        }
+                        if (user.id) {
+                            this.$router.push('dashboard') // Go to dashboard
+                        }
+                    })
+                    this.$api.send('login', {  // fire login call to ipcMain
+                        username: this.$data.form.username,
+                        password: this.$data.form.password
+                    })
                 }
             }
         }

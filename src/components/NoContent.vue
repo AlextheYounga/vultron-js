@@ -29,14 +29,13 @@
                     class="-ml-1 mr-2 h-5 w-5"
                     aria-hidden="true"
                 />
-                New {{ model.toTitleCase() }}
+                New {{ this.$helpers.toTitleCase(model) }}
             </button>
         </div>
     </div>
 </template>
 
 <script>
-    import '../prototypes'
     import { PlusIcon } from '@heroicons/vue/solid'
 
     export default {
