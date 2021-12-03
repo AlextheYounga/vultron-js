@@ -32,7 +32,7 @@
         }
 
         if (typeof status == 'string') {
-          return status.toTitleCase();
+          return this.$helpers.toTitleCase(status);
         }
         return status;
       },

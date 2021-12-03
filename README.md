@@ -26,21 +26,13 @@ const User = require('../../models/User')
 const AuthController = {
 	/* Specify which functions here will be included in Electron's ipcMain module. 
 	* This is what you will query on the frontend. 
-	* Vue example: 
-		this.$api.sendSync('login', {
-			username: this.$data.form.username, 
-			password: this.$data.form.password }
-		)
 	*/
 	endpoints: ['login'], 
 
-	login: function (event, arg) {
-		User.verify(arg.username, arg.password).then(function (user) {
-			event.returnValue = user.toJSON()
-			return event
-
+	login: function (arg) {
+		User.verify(arg.username, arg.password).then(function (verified) {
+			return verified.toJSON()
 		})
-		return event.returnValue
 	},
 }
 
@@ -49,9 +41,51 @@ export default AuthController
 
 You place your functions in the controller object, and just specify which functions you want to appear as callable endpoints in Electron's ipcMain module.
 
-From the frontend you can query ipcMain like this:
+From the frontend you will use the this.$api global variable of ipcRenderer to fire ipcMain events like this: 
 ```
- let user = this.$api.sendSync('login', { username: form.username, password: form.password })
+this.$api.on('login', (event, arg) => { //function that fires when a response is received from 'login' event
+	let user = arg
+	if (!user) return
+	if (user instanceof Error) { // Error handling
+		this.$data.notFound = user.message
+		return
+	}
+	if (user.id) {
+		this.$router.push('dashboard') // Go to dashboard
+	}
+})
+this.$api.send('login', {  // fire login call to ipcMain
+	username: this.$data.form.username,
+	password: this.$data.form.password
+})
+```
+
+These calls are asynchronous because Javascript (if you're new to Javascript just get used to the messy cody blocks that come from async functions). You'll have to keep this in mind when building out your Vue frontends.
+Here's an example of passing data to a Vue template on page load. 
+
+```
+<template>
+<p v-if="apiValue"> {{ apiValue }} </p> //The v-if will handle the null value, so it won't show until the value is returned.
+</template>
+<script>
+    import App from "@/App.vue"
+
+    export default {
+        layout: App,
+        data() {
+			return {
+				// The value should be instantiated here. If you work with Vue you should be used to doing that already.
+				apiValue: null, 
+			}
+        },
+		created(){ // This will be fired on page load.
+            this.$api.on('ping', (event, arg) => {
+				this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
+            })
+            this.$api.send('ping')
+		}
+    };
+</script>
 ```
 
 ## Models
@@ -98,14 +132,16 @@ I have included a few global variables you can use by default in main.js:
 app.config.globalProperties.$http = () => axios
 app.config.globalProperties.$api = ipcRenderer
 app.config.globalProperties.$schema = schema
+app.config.globalProperties.$helpers = Helpers
+
 ```
 
 This is how Vue3 handles global variables. You can call these in your views like ```this.$http``` (for the axios variable)
 
-I have also included a prototypes.js file with some useful prototypes you can use in all your views. Simply import that file into any view to use any of those functions. Think of those as your helpers. 
+I have also included a Helpers.js file with some useful functions you can use in all your views by calling this.$helpers. 
 
 
 ## This is being actively developed, and more is to come, but this is more than enough to get most started. 
 ## I'd like to make this great, please reach out to me with any issues/features you would like to see. 
 
-#Enjoy
+# Enjoy
