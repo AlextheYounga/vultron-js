@@ -39,7 +39,7 @@ const AuthController = {
 export default AuthController
 ```
 
-You place your functions in the controller object, and just specify which functions you want to appear as callable endpoints in Electron's ipcMain module. Any functions not listed in the endpoints array will not be sent to the api. Currently working on making named endpoints.
+You place your functions in the controller object, and just specify which functions you want to appear as callable endpoints in Electron's ipcMain module. Any functions not listed in the endpoints array will not be sent to the api.
 
 From the frontend you will use the this.$api global variable of ipcRenderer to fire ipcMain events like this: 
 ```javascript
@@ -110,7 +110,7 @@ module.exports = Bank;
 
 For more information here, please refer to the [knex](https://knexjs.org/) and [bookshelf](https://bookshelfjs.org/) documentations. 
 
-###Migrations
+### Migrations
 To make new migrations 
 ```
 knex migrate:make migration_name 
