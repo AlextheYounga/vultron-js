@@ -4,7 +4,9 @@
 
 Coming from a full-stack, MVC mindset makes Electron seem foreign. I sought to find the best way to bring the MVC mindset to Electron.
 
-No third party database, data is stored in a sql environment using Knex and Bookshelf, which can support Sqlite3, Mysql, and Postgres. The data is all stored locally by default in Sqlite3
+No third party database, data is stored in a sql environment using Knex and Bookshelf, which can support Sqlite3, Mysql, and Postgres. 
+
+By default, the first time you run electron:serve, a sqlite database is automatically generated under ```src/database/vultron.db``` and migrations will run programmatically if any exist.
 
 To run Electron's dev environment:
 ```
