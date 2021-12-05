@@ -73,7 +73,6 @@
                 </div>
             </div>
         </Disclosure>
-        <Upload />
     </div>
     <router-view />
 
@@ -85,7 +84,7 @@
     import Avatar from './Avatar.vue'
 
     const navigation = [
-        { title: 'Test Link', key: 'link', link: '#' },
+        { title: 'TestLink', key: 'link', link: '#' },
     ]
     const profile = ['Your Profile', 'Settings', 'Sign out']
 
@@ -101,7 +100,6 @@
         },
         data() {
             return {
-                uploadOpened: false,
                 navigation,
                 profile
             }
