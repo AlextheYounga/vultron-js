@@ -65,7 +65,8 @@ Here's an example of passing data to a Vue template on page load.
 
 ```vue
 <template>
-<p v-if="apiValue"> {{ apiValue }} </p> //The v-if will handle the null value, so it won't show until the value is returned.
+	<!-- The v-if will handle the null value, so it won't show until the value is returned. -->
+	<p v-if="apiValue"> {{ apiValue }} </p> 
 </template>
 <script>
     import App from "@/App.vue"
