@@ -7,6 +7,7 @@ module.exports = {
 					'src/database/',
 					'src/models/',
 					'src/server/',
+					'vultron.db'
 				]
 			},
 			externals: ['sqlite3', 'knex', 'bookshelf'],

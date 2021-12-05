@@ -1,17 +1,17 @@
-const path = require("path")
+// const path = require("path")
 
 module.exports = {
 	development: {
 		client: 'sqlite3',
 		connection: {
-			filename: path.resolve('./src/database/vultron.db')
+			filename: 'vultron.db'
 		},
 		migrations: {
-			directory: path.resolve('./src/database/migrations'),
+			directory: './src/database/migrations',
 			tableName: 'migrations',
 		},
 		seeds: {
-			directory: path.resolve('./src/database/seeds'),
+			directory: './src/database/seeds',
 		},
 		useNullAsDefault: true,
 	},
@@ -19,28 +19,28 @@ module.exports = {
 	staging: {
 		client: 'sqlite3',
 		connection: {
-			filename: path.resolve('./src/database/vultron.db')
+			filename: 'vultron.db'
 		},
 		migrations: {
-			directory: path.resolve('./src/database/migrations'),
+			directory: './src/database/migrations',
 			tableName: 'migrations',
 		},
 		seeds: {
-			directory: path.resolve('./src/database/seeds'),
+			directory: './src/database/seeds',
 		},
 		useNullAsDefault: true,
 	},
 	production: {
 		client: 'sqlite3',
 		connection: {
-			filename: path.resolve('./src/database/vultron.db')
+			filename: 'vultron.db'
 		},
 		migrations: {
-			directory: path.resolve('./src/database/migrations'),
+			directory: './src/database/migrations',
 			tableName: 'migrations',
 		},
 		seeds: {
-			directory: path.resolve('./src/database/seeds'),
+			directory: './src/database/seeds',
 		},
 		useNullAsDefault: true,
 	}

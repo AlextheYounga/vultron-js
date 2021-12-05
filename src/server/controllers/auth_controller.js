@@ -6,9 +6,9 @@ const AuthController = {
 	*/
 	endpoints: ['login'], 
 
-	login: function (arg) {
+	login: function (event, arg) {
 		User.verify(arg.username, arg.password).then(function (verified) {
-			return verified.toJSON()
+			event.reply('login', verified.toJSON())
 		})
 	},
 }

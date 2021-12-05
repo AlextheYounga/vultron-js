@@ -15,8 +15,8 @@ function loadApiEndpoints() {
 				for (let endpoint of controller.default.endpoints) {
 					// Add endpoint to Electron's ipc api.
 					ipcMain.on(endpoint, (event, arg) => {
-						let response = controller.default[endpoint](arg) // dynamically call controller endpoints
-						event.reply(endpoint, response)
+						controller.default[endpoint](event, arg) // dynamically call controller endpoints
+						// event.reply(endpoint, response)
 					})
 				}
 			}
