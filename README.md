@@ -78,12 +78,12 @@ Here's an example of passing data to a Vue template on page load.
 			apiValue: null, 
 		}
         },
-		created(){ // This will be fired on page load.
+	created(){ // This will be fired on page load.
             this.$api.on('ping', (event, arg) => {
 				this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
             })
             this.$api.send('ping')
-		}
+	}
     };
 </script>
 ```
