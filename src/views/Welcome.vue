@@ -18,7 +18,7 @@
                         >Ping DB
                         </button>
                         <a
-                            href="#"
+                            href="/login"
                             class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white w-24"
                         >Login
                             <span>

@@ -1,9 +1,6 @@
 const fs = require("fs");
 const path = require("path")
-
-
 const knex = require('./config/knex')
-const bookshelf = require('./config/bookshelf')
 const sqlite3 = require("sqlite3").verbose();
 
 export const environment = process.env.ENVIRONMENT || 'development';
@@ -14,16 +11,23 @@ export async function setup() {
 	if (fs.existsSync(dbConfig.connection.filename) == false) {
 		console.log('Creating DB...');
 		try {
-			
 			new sqlite3.Database(dbConfig.connection.filename,
 				sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
 			)
-			// Migrate files
-			knex.migrate.latest()
 		} catch (err) {
 			console.log(err);
 		}
 	}
+}
+
+export async function runMigrations() {
+	// Migrate files
+	try {
+		knex.migrate.latest()
+	} catch (err) {
+		console.log(err);
+	}
+
 }
 
 // Retrieves columns from a table

@@ -20,7 +20,6 @@ const TestController = {
 				console.log('User model has been saved');
 				event.reply('pingdB', user.toJSON()) //send reply back
 			})
-			return
 		}
 
 		User.model.fetchAll().then((users) => {
@@ -30,7 +29,6 @@ const TestController = {
 			}
 			event.reply('pingDB', users.toJSON()) //send reply back
 			return
-
 		})
 
 
