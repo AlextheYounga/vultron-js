@@ -1,4 +1,4 @@
-const bookshelf = require('../database/config/bookshelf')
+const bookshelf = require('../database/bookshelf')
 const User = require('./User.js');
 
 const Bank = {

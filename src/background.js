@@ -15,7 +15,7 @@ import installExtension, {
 import api from './server/api'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const fs = require("fs");
-import { dbConfig, buildSchema } from './database/database'
+const database = require('./database/database')
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{
@@ -105,10 +105,10 @@ if (isDevelopment) {
 }
 
 // Database Functions
-if (fs.existsSync(dbConfig.connection.filename)) {
+if (fs.existsSync(database.dbConfig.connection.filename)) {
 	// Build Schema
 	try {
-		buildSchema()
+		database.buildSchema()
 	} catch (err) {
 		console.log(err)
 	}
