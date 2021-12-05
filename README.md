@@ -44,7 +44,7 @@ You place your functions in the controller object, and just specify which functi
 From the frontend you will use the this.$api global variable of ipcRenderer to fire ipcMain events like this: 
 ```javascript
 this.$api.on('login', (event, arg) => { //function that fires when a response is received from 'login' event
-	let user = arg
+	let user = arg // returned value
 	if (!user) return
 	if (user instanceof Error) { // Error handling
 		this.$data.notFound = user.message
@@ -54,8 +54,9 @@ this.$api.on('login', (event, arg) => { //function that fires when a response is
 		this.$router.push('dashboard') // Go to dashboard
 	}
 })
-this.$api.send('login', {  // fire login call to ipcMain
-	username: this.$data.form.username,
+// Fire login call to ipcMain, first param endpoint, second param payload.
+this.$api.send('login', {
+	username: this.$data.form.username, //payload
 	password: this.$data.form.password
 })
 ```
@@ -81,7 +82,7 @@ Here's an example of passing data to a Vue template on page load.
         },
 	created(){ // This will be fired on page load.
             this.$api.on('ping', (event, arg) => {
-				this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
+		this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
             })
             this.$api.send('ping')
 	}
