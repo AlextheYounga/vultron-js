@@ -39,7 +39,7 @@ const AuthController = {
 export default AuthController
 ```
 
-You place your functions in the controller object, and just specify which functions you want to appear as callable endpoints in Electron's ipcMain module.
+You place your functions in the controller object, and just specify which functions you want to appear as callable endpoints in Electron's ipcMain module. Any functions not listed in the endpoints array will not be sent to the api. Currently working on making named endpoints.
 
 From the frontend you will use the this.$api global variable of ipcRenderer to fire ipcMain events like this: 
 ```javascript
