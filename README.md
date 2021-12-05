@@ -124,7 +124,7 @@ See some of the example migrations for how to build them out.
 ### Schema
 I don't know about you, but I hate building out forms, going back and forth to find which fields go where. I hate that. I do everything programmatically. So by default a schema file is generated in src/database/schema.json as soon as Electron is built. You can use this schema in the frontend if you'd like by calling ```this.$schema.``` I have even included a DynamicTable file to give an example of what I mean. 
 
-##Views
+## Views
 
 For the frontend, we use Vue and Tailwind, which is a really fun combination. 
 I have included a few global variables you can use by default in main.js: 
