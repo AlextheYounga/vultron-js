@@ -1,17 +1,16 @@
 const fs = require("fs");
 const path = require("path")
-const knex = require('./config/knex')
 const sqlite3 = require("sqlite3").verbose();
-
-export const environment = process.env.ENVIRONMENT || 'development';
-export const dbConfig = require('../../knexfile')[environment]
+const environment = process.env.ENVIRONMENT || 'development';
+const config = require('../../knexfile')[environment];
+const knex = require('knex')(config)
 
 // Creating database if db does not exist.
-export async function setup() {
-	if (fs.existsSync(dbConfig.connection.filename) == false) {
+async function setup() {
+	if (fs.existsSync(config.connection.filename) == false) {
 		console.log('Creating DB...');
 		try {
-			new sqlite3.Database(dbConfig.connection.filename,
+			new sqlite3.Database(config.connection.filename,
 				sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
 			)
 		} catch (err) {
@@ -20,7 +19,7 @@ export async function setup() {
 	}
 }
 
-export async function runMigrations() {
+async function runMigrations() {
 	// Migrate files
 	try {
 		knex.migrate.latest()
@@ -31,7 +30,7 @@ export async function runMigrations() {
 }
 
 // Retrieves columns from a table
-export async function getColumns(table) {
+async function getColumns(table) {
 	return knex.raw(`PRAGMA table_info(${table.name});`).then(function (columns) {
 		let tableColumns = []
 
@@ -60,7 +59,7 @@ export async function getColumns(table) {
 }
 
 // Retrieves tables and table columns
-export async function getSchema() {
+async function getSchema() {
 	var schema = {}
 	var tables = await knex.raw(`SELECT * FROM sqlite_master where type='table'`)
 	if (tables && tables.length !== 0) {
@@ -75,7 +74,7 @@ export async function getSchema() {
 }
 
 // Writes schema.json file
-export async function buildSchema() {
+async function buildSchema() {
 	const schema = await getSchema()
 	if (schema && Object.keys(schema).length !== 0) {
 		fs.writeFile(path.resolve('src/database/schema.json'), JSON.stringify(schema), function (err) {
@@ -83,4 +82,15 @@ export async function buildSchema() {
 			console.log('Schema built successfully');
 		});
 	}
+}
+
+module.exports = {
+	knex: knex,
+	dbConfig: config,
+	environment: environment,
+	setupDB: setup,
+	getSchema: getSchema,
+	getColumns: getColumns,
+	buildSchema: buildSchema,
+	runMigrations: runMigrations
 }
