@@ -63,7 +63,7 @@ this.$api.send('login', {
 })
 ```
 
-These calls are asynchronous because Javascript (if you're new to Javascript just get used to the messy cody blocks that come from async functions). You'll have to keep this in mind when building out your Vue frontends.
+These calls are asynchronous because Javascript (if you're new to Javascript just get used to the messy code blocks that come from async functions). You'll have to keep this in mind when building out your Vue frontends.
 Here's an example of passing data to a Vue template on page load. 
 
 ```vue
