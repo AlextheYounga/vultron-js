@@ -1,5 +1,6 @@
 <template>
     <Navbar v-if="showNavbar" />
+	<router-view></router-view>
 </template>
 
 <script>
@@ -9,6 +10,9 @@
         components: {
             Navbar,
         },
+		created() {
+			this.$router.push('/')
+		},
         computed: {
             showNavbar() {
                 let route = this.$route.name

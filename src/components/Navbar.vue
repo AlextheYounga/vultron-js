@@ -74,7 +74,7 @@
             </div>
         </Disclosure>
     </div>
-    <router-view />
+    
 
 </template>
 

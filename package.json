@@ -4,7 +4,15 @@
   "license": "UNLICENSED",
   "version": "0.1.0",
   "private": false,
-  "keywords": ["electron", "vue", "bookshelf", "knex", "sql", "mvc", "framework"],
+  "keywords": [
+    "electron",
+    "vue",
+    "bookshelf",
+    "knex",
+    "sql",
+    "mvc",
+    "framework"
+  ],
   "engines": {
     "npm": "14.18.0"
   },
@@ -32,8 +40,6 @@
     "babel-preset-es2015": "^6.24.1",
     "bcryptjs": "^2.4.3",
     "bookshelf": "^1.2.0",
-    "bookshelf-encrypt-columns": "^0.1.0",
-    "bookshelf-json-columns": "^3.0.0",
     "core-js": "^3.6.5",
     "knex": "^0.95.14",
     "light-date": "^1.2.0",
@@ -49,7 +55,6 @@
     "uuid": "^8.3.2",
     "vue": "^3.0.0",
     "vue-loader": "^15.9.8",
-    "vue-router": "^4.0.11",
     "vue-template-compiler": "^2.6.14",
     "vue3-storage": "^0.1.11",
     "webpack": "4.1.0"

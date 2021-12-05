@@ -18,13 +18,12 @@ const routes = [{
 		path: '/login',
 		name: 'auth.login',
 		component: loadView('auth/Login'),
-	},
+	}
 ]
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes
 })
-
 
 export default router
