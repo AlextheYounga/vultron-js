@@ -8,7 +8,7 @@ const AuthController = {
 
 	login: function (event, arg) {
 		User.verify(arg.username, arg.password).then(function (verified) {
-			event.reply('login', verified.toJSON())
+			event.reply('login', verified.toJSON()) // Send reply back
 		})
 	},
 }

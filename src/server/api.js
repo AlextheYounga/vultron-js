@@ -4,7 +4,7 @@ const {
 const fs = require("fs");
 const path = require("path")
 
-function loadApiEndpoints() {
+function loadApi() {
 	//Dynamically import controllers. List endpoints you wish to be included in the api in the endpoints property of each controller.
 	let controllersPath = path.resolve('src/server/controllers')
 	let controllerFiles = fs.readdirSync(controllersPath); // Read all controller files
@@ -26,5 +26,5 @@ function loadApiEndpoints() {
 }
 
 export default {
-	load: loadApiEndpoints
+	load: loadApi
 }

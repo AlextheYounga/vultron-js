@@ -6,7 +6,7 @@ Coming from a full-stack, MVC mindset makes Electron seem foreign. I sought to f
 
 No third party database, data is stored in a sql environment using Knex and Bookshelf, which can support Sqlite3, Mysql, and Postgres. 
 
-By default, the first time you run electron:serve, a sqlite database is automatically generated under ```src/database/vultron.db``` and migrations will run programmatically if any exist.
+By default, the first time you run electron:serve, a sqlite database is automatically generated under ```vultron.db``` and migrations will run programmatically if any exist.
 
 To run Electron's dev environment:
 ```
@@ -31,9 +31,9 @@ const AuthController = {
 	*/
 	endpoints: ['login'], 
 
-	login: function (arg) {
+	login: function (event, arg) {
 		User.verify(arg.username, arg.password).then(function (verified) {
-			return verified.toJSON()
+			event.reply('login', verified.toJSON()) // Send reply back
 		})
 	},
 }
@@ -77,17 +77,17 @@ Here's an example of passing data to a Vue template on page load.
     export default {
         layout: App,
         data() {
-		return {
-			// The value should be instantiated here. If you work with Vue you should be used to doing that already.
-			apiValue: null, 
-		}
+			return {
+				// The value should be instantiated here. If you work with Vue you should be used to doing that already.
+				apiValue: null, 
+			}
         },
-	created(){ // This will be fired on page load.
+	created() { // This will be fired on page load.
             this.$api.on('ping', (event, arg) => {
-		this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
+				this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
             })
             this.$api.send('ping')
-	}
+		}
     };
 </script>
 ```
@@ -96,14 +96,14 @@ Here's an example of passing data to a Vue template on page load.
 Your models are handled by a combination of knex.js & bookshelf.js, (which is an extension of knex). If you come from a Laravel/Rails background, you will love how nice your models are. 
 
 ```javascript
-const bookshelf = require('../database/bookshelf');
+const bookshelf = require('../database/config/bookshelf')
 const User = require('./User.js');
 
 const Bank = {
 	model: bookshelf.Model.extend({
 		tableName: 'banks',
 		user: function () {
-			return this.belongsTo(User); //Specify relations like this.
+			return this.belongsTo(User);
 		},
 	}),
 }
