@@ -26,6 +26,10 @@ protocol.registerSchemesAsPrivileged([{
 	}
 }])
 
+
+// Load Custom Api Endpoints
+api.load()
+
 async function createWindow() {
 	// Create the browser window.
 	const {
@@ -47,14 +51,11 @@ async function createWindow() {
 		// Load the url of the dev server if in development mode
 		await mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
 		if (!process.env.IS_TEST) mainWindow.webContents.openDevTools()
-		api.load() // load custom api endpoints
 
 	} else {
 		createProtocol('app')
 		// Load the index.html when not in development
 		mainWindow.loadURL('app://./index.html')
-		api.load() // load custom api endpoints
-
 	}
 
 }
@@ -103,6 +104,7 @@ if (isDevelopment) {
 		})
 	}
 }
+
 
 // Database Functions
 if (fs.existsSync(database.dbConfig.connection.filename)) {
