@@ -77,7 +77,7 @@ async function getSchema() {
 async function buildSchema() {
 	const schema = await getSchema()
 	if (schema && Object.keys(schema).length !== 0) {
-		fs.writeFile(path.resolve('src/database/schema.json'), JSON.stringify(schema), function (err) {
+		fs.writeFile(path.join(path.dirname(__dirname), 'src', 'database', 'schema.json'), JSON.stringify(schema), function (err) {
 			if (err) throw err;
 			console.log('Schema built successfully');
 		});
