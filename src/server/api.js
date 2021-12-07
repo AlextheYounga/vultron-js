@@ -6,7 +6,7 @@ const path = require("path")
 
 function loadApi() {
 	//Dynamically import controllers. List endpoints you wish to be included in the api in the endpoints property of each controller.
-	let controllersPath = path.resolve('src/server/controllers')
+	let controllersPath = path.join(path.dirname(__dirname), 'src', 'server', 'controllers')
 	let controllerFiles = fs.readdirSync(controllersPath); // Read all controller files
 
 	for (let filename of controllerFiles) {

@@ -17,9 +17,9 @@
                             class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white w-24"
                         >Ping DB
                         </button>
-                        <a
-                            href="/login"
+                        <router-link
                             class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white w-24"
+                            to="/login"
                         >Login
                             <span>
                                 <LoginIcon
@@ -27,7 +27,8 @@
                                     aria-hidden="true"
                                 />
                             </span>
-                        </a>
+                        </router-link>
+
                     </div>
                     <p
                         v-if="apiValue"
