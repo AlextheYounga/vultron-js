@@ -1,11 +1,13 @@
 const Bank = require('../../models/Bank')
 
 const BanksController = {
-	endpoints: ['banksAll'],
+	endpoints: [
+		{ name: 'banks.all', prop: 'banksAll' },
+	],
 
 	banksAll: function (event, arg) {
 		Bank.model.fetchAll().then((banks) => {
-			event.reply('banksAll', banks.toJSON())
+			event.reply('banks.all', banks.toJSON()) // send reply to named endpoint
 		})
 	}
 }

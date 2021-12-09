@@ -4,10 +4,13 @@ const TestController = {
 	/* Specify which functions here will be included in Electron's ipcMain module. 
 	 * This is what you will query on the frontend. 
 	 */
-	endpoints: ['pingApi', 'pingDB'],
+	endpoints: [
+		{ name: 'api.ping', prop: 'pingApi' },
+		{ name: 'db.ping', prop: 'pingDB' },
+	],
 
 	pingApi: function (event, arg) {
-		event.reply('pingApi', 'pong') //send reply back
+		event.reply('api.ping', 'pong') //send reply back
 	},
 	pingDB: function (event, arg) {
 		function createUser() {
@@ -18,7 +21,7 @@ const TestController = {
 				email: 'alex@alextheyounger.me'
 			}).save().then(function (user) {
 				console.log('User model has been saved');
-				event.reply('pingdB', user.toJSON()) //send reply back
+				event.reply('db.ping', user.toJSON()) //send reply back
 			})
 		}
 
@@ -27,7 +30,7 @@ const TestController = {
 				createUser()
 				return
 			}
-			event.reply('pingDB', users.toJSON()) //send reply back
+			event.reply('db.ping', users.toJSON()) //send reply back
 			return
 		})
 
