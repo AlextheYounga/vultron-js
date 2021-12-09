@@ -1,16 +1,22 @@
 const User = require('../../models/User')
 
 const TestController = {
-	/* Specify which functions here will be included in Electron's ipcMain module. 
-	 * This is what you will query on the frontend. 
+	/* Specify which actions here will be included in Electron's ipcMain module. 
+	 * The 'action' prop specifies which function to call, while the 'name' prop
+	 * sets the custom name of the endpoint, which is what you will call on the front-end.
 	 */
-	endpoints: [
-		{ name: 'api.ping', prop: 'pingApi' },
-		{ name: 'db.ping', prop: 'pingDB' },
+	endpoints: [{
+			name: 'api.ping', // what you will call on the front-end
+			action: 'pingApi' //name of action
+		},
+		{
+			name: 'db.ping',
+			action: 'pingDB'
+		},
 	],
 
 	pingApi: function (event, arg) {
-		event.reply('api.ping', 'pong') //send reply back
+		event.reply('api.ping', 'pong') // Send reply back using name of endpoint event
 	},
 	pingDB: function (event, arg) {
 		function createUser() {
