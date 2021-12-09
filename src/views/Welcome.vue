@@ -73,18 +73,21 @@
         },
         methods: {
             pingApi() {
-                this.$api.on('pingApi', (event, arg) => {
+                this.$api.send('api.ping')
+
+                this.$api.on('api.ping', (event, arg) => {
                     console.log(arg)
                     this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
                 })
-                this.$api.send('pingApi')
             },
             pingDB() {
-                this.$api.on('pingDB', (event, arg) => {
+				this.$api.send('db.ping')
+				
+                this.$api.on('db.ping', (event, arg) => {
                     console.log(arg)
                     this.$data.dbValue = arg[0] // This will change the value of apiValue as soon as it returns.
                 })
-                this.$api.send('pingDB')
+                
             }
         }
 

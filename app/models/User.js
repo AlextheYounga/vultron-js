@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const Bank = require('./Bank.js');
-const bookshelf = require('../database/bookshelf')
+const bookshelf = require('../../database/bookshelf')
 
 const User = {
 	model: bookshelf.Model.extend({
