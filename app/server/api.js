@@ -14,7 +14,7 @@ function loadApi() {
 			if (Object.keys(controller.default).includes('endpoints')) {
 				for (let endpoint of controller.default.endpoints) {
 					ipcMain.on(endpoint.name, (event, arg) => { // ipcMain listens on event endpoint.name
-						controller.default[endpoint.prop](event, arg) // dynamically call controller endpoints
+						controller.default[endpoint.action](event, arg) // dynamically call controller endpoints
 					})
 				}
 			}

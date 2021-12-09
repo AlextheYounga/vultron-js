@@ -2,9 +2,9 @@
 ## An Electron MVC for building desktop apps that makes sense
 #### [Electron](https://www.electronjs.org/) | [Vue3](https://v3.vuejs.org/) | [Knex](https://knexjs.org/) & [Bookshelf](https://bookshelfjs.org/) | [Tailwind](https://tailwindcss.com/)
 
-Coming from a full-stack, MVC mindset makes Electron seem foreign. I sought to find the best way to bring the MVC mindset to Electron.
+Vultron handles the esoteric parts of Electron for you. It also allows you to use SQL databases with Electron, all wrapped in a framework that feels more like Rails or Laravel. 
 
-No third party database, data is stored in a sql environment using Knex and Bookshelf, which can support Sqlite3, Mysql, and Postgres. 
+Databases are handled using [Knex](https://knexjs.org/) and [Bookshelf](https://bookshelfjs.org/), which can support Sqlite3, Mysql, and Postgres. 
 
 By default, the first time you run electron:serve, a sqlite database is automatically generated under ```vultron.db``` and migrations will run programmatically if any exist.
 
@@ -18,22 +18,58 @@ To build electron:
 yarn run electron:build
 ```
 
+File structure:
+```
+├── app
+│   ├── models
+│   ├── modules
+│   └── server
+│       ├── api.js // Handles Electron's ipcMain functions
+│       └── controllers // Your controllers and controller actions will get compiled by api.js
+├── database
+│   ├── bookshelf.js // Handles Bookshelf configs for models.
+│   ├── database.js // Handles initial db functions and schema functions
+│   ├── migrations // Migrations handled by Knex
+│   └── schema.json // Schema file
+├── knexfile.js // Handles Knex configs and is primary database config file.
+├── package.json
+├── postcss.config.js
+├── public
+│   ├── favicon.ico
+│   └── index.html
+├── src
+│   ├── App.vue
+│   ├── assets
+│   ├── background.js // Electron create window functions
+│   ├── components
+│   ├── main.js // Main file for Vue
+│   ├── router
+│   └── views //Frontend views
+├── tailwind.config.js
+├── vue.config.js //Handles Vue configs and Electron builder configs
+├── vultron.db
+├── yarn-error.log
+└── yarn.lock
+```
+
 ## Controllers
-The magic happens in the server folder, which uses Electron's [ipcMain](https://www.electronjs.org/docs/latest/api/ipc-main) module to create a backend-to-frontend api. 
+The magic happens in the ```app/server``` folder, which use Electron's [ipcMain](https://www.electronjs.org/docs/latest/api/ipc-main) module to create a backend-to-frontend api. No third party server system like Express is necessary, it is all handled through Electron. 
 
 You create your controllers with this strategy:
 ```javascript
 const User = require('../../models/User')
-
 const AuthController = {
-	/* Specify which functions here will be included in Electron's ipcMain module. 
-	* This is what you will query on the frontend. 
-	*/
-	endpoints: ['login'], 
+	/* Specify which actions here will be included in Electron's ipcMain module. 
+	 * The 'action' prop specifies which function to call, while the 'name' prop
+	 * sets the custom name of the endpoint, which is what you will call on the front-end.
+	 */
+	endpoints: [
+		{name: 'login', action: 'login'},
+	],
 
 	login: function (event, arg) {
 		User.verify(arg.username, arg.password).then(function (verified) {
-			event.reply('login', verified.toJSON()) // Send reply back
+			event.reply('login', verified.toJSON()) // Send reply back using name of endpoint event
 		})
 	},
 }
@@ -45,21 +81,11 @@ You place your functions in the controller object, and just specify which functi
 
 From the frontend you will use the this.$api global variable of ipcRenderer to fire ipcMain events like this: 
 ```javascript
-this.$api.on('login', (event, arg) => { //function that fires when a response is received from 'login' event
-	let user = arg // returned value
-	if (!user) return
-	if (user instanceof Error) { // Error handling
-		this.$data.notFound = user.message
-		return
-	}
-	if (user.id) {
-		this.$router.push('dashboard') // Go to dashboard
-	}
-})
-// Fire login call to ipcMain, first param endpoint, second param payload.
-this.$api.send('login', {
-	username: this.$data.form.username, //payload
-	password: this.$data.form.password
+this.$api.send('api.ping') // Call api endpoint
+
+this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
+	console.log(arg)
+	this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
 })
 ```
 
@@ -82,34 +108,51 @@ Here's an example of passing data to a Vue template on page load.
 				apiValue: null, 
 			}
         },
-	created() { // This will be fired on page load.
-            this.$api.on('ping', (event, arg) => {
+		created() { // This will be fired on page load.
+			this.$api.send('api.ping') // Call api endpoint
+
+			this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
+				console.log(arg)
 				this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
-            })
-            this.$api.send('ping')
+			})
 		}
     };
 </script>
 ```
 
 ## Models
-Your models are handled by a combination of knex.js & bookshelf.js, (which is an extension of knex). If you come from a Laravel/Rails background, you will love how nice your models are. 
+Your models are handled by a combination of [Knex JS](https://knexjs.org/) & [Bookshelf JS](https://bookshelfjs.org/), (which is an extension of knex). If you come from a Laravel/Rails background, you will love how nice your models look and how familiar they feel. 
 
 ```javascript
 const bookshelf = require('../database/config/bookshelf')
 const User = require('./User.js');
 
+// Bank Model that belongs to User
 const Bank = {
 	model: bookshelf.Model.extend({
 		tableName: 'banks',
 		user: function () {
-			return this.belongsTo(User);
+			return this.belongsTo(User); // Set relations in a very MVC fashion. 
 		},
 	}),
 }
 
 module.exports = Bank;
 ```
+
+Then, elsewhere, you can call Bookshelf SQL queries by calling Bank.model:
+```javascript
+Bank.model.fetchAll().then((banks) => {
+	/* Do async here. 
+	* Read the bookshelf-js documentation for more detailed documentation here.
+	* https://bookshelfjs.org/
+	*/
+})
+```
+
+Keep in mind that all (useful) Bookshelf functions are async, so write your code accordingly. Some of the Bookshelf documentation can seem... sporadic, but I have provided examples of successful Bookshelf queries without ever writing a single Promise.
+
+I have also included examples of how to automatically encrypt fields and handle user verification. 
 
 For more information here, please refer to the [knex](https://knexjs.org/) and [bookshelf](https://bookshelfjs.org/) documentations. 
 
@@ -125,7 +168,7 @@ knex migrate:latest
 See some of the example migrations for how to build them out.
 
 ### Schema
-I don't know about you, but I hate building out forms, going back and forth to find which fields go where. I hate that. I do everything programmatically. So by default a schema file is generated in src/database/schema.json as soon as Electron is built. You can use this schema in the frontend if you'd like by calling ```this.$schema.``` I have even included a DynamicTable file to give an example of what I mean. 
+I hate building out forms line by line; I do everything programmatically. So by default a schema file is generated in ```database/schema.json``` as soon as Electron is built. You can use this schema in the frontend if you'd like by calling ```this.$schema.``` I have even included a DynamicTable file that uses this schema file to programmatically build out forms. If your app is going to extensively connect to the internet, you may want to consider removing this from the frontend to prevent the vulnerability of your database structure being exposed. For isolated desktop apps, this poses no real harm. 
 
 ## Views
 
@@ -146,6 +189,6 @@ I have also included a Helpers.js file with some useful functions you can use in
 
 
 ## This is being actively developed, and more is to come, but this is more than enough to get most started. 
-## I'd like to make this great, please reach out to me with any issues/features you would like to see. 
+## I'd like to make this great, please reach out to me with any issues/features you would like to see. I will respond.
 
 # Enjoy
