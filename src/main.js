@@ -8,8 +8,8 @@ const axios = require('axios')
 const {
 	ipcRenderer
 } = require('electron')
-const schema = require('./database/schema.json');
-import Helpers from './modules/Helpers'
+const schema = require('../database/schema.json');
+import Helpers from '../app/modules/Helpers'
 
 // Creates db if db does not exist.
 const app = createApp(App).use(router)

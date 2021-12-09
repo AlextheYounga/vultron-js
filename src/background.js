@@ -12,10 +12,10 @@ import {
 import installExtension, {
 	VUEJS3_DEVTOOLS
 } from 'electron-devtools-installer'
-import api from './server/api'
+import api from '../app/server/api'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const fs = require("fs");
-const database = require('./database/database')
+const database = require('../database/database')
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{
