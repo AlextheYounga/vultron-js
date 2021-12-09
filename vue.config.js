@@ -4,9 +4,7 @@ module.exports = {
 			nodeIntegration: true,
 			builderOptions: {
 				extraResources: [
-					'src/database',
-					'src/models',
-					'src/server',
+					'app',
 					'vultron.db'
 				]
 			},
