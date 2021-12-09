@@ -8,7 +8,7 @@ const axios = require('axios')
 const {
 	ipcRenderer
 } = require('electron')
-const schema = require('../app/database/schema.json');
+const schema = require('../database/schema.json');
 import Helpers from '../app/modules/Helpers'
 
 // Creates db if db does not exist.

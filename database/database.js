@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path")
 const sqlite3 = require("sqlite3").verbose();
 const environment = process.env.ENVIRONMENT || 'development';
-const config = require('../../knexfile')[environment];
+const config = require('../knexfile')[environment];
 const knex = require('knex')(config)
 
 // Creating database if db does not exist.
@@ -77,7 +77,7 @@ async function getSchema() {
 async function buildSchema() {
 	const schema = await getSchema()
 	if (schema && Object.keys(schema).length !== 0) {
-		fs.writeFile(path.join(path.dirname(__dirname), 'app', 'database', 'schema.json'), JSON.stringify(schema), function (err) {
+		fs.writeFile(path.join(path.dirname(__dirname), 'database', 'schema.json'), JSON.stringify(schema), function (err) {
 			if (err) throw err;
 			console.log('Schema built successfully');
 		});

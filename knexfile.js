@@ -7,11 +7,11 @@ module.exports = {
 			filename: path.join(path.dirname(__dirname), 'vultron.db')
 		},
 		migrations: {
-			directory: path.join(path.dirname(__dirname), 'app', 'database', 'migrations'),
+			directory: path.join(path.dirname(__dirname), 'database', 'migrations'),
 			tableName: 'migrations',
 		},
 		seeds: {
-			directory: path.join(path.dirname(__dirname), 'app', 'database', 'seeds'),
+			directory: path.join(path.dirname(__dirname), 'database', 'seeds'),
 		},
 		useNullAsDefault: true,
 	},
@@ -22,11 +22,11 @@ module.exports = {
 			filename: path.join(path.dirname(__dirname), 'vultron.db')
 		},
 		migrations: {
-			directory: path.join(path.dirname(__dirname), 'app', 'database', 'migrations'),
+			directory: path.join(path.dirname(__dirname), 'database', 'migrations'),
 			tableName: 'migrations',
 		},
 		seeds: {
-			directory: path.join(path.dirname(__dirname), 'app', 'database', 'seeds'),
+			directory: path.join(path.dirname(__dirname), 'database', 'seeds'),
 		},
 		useNullAsDefault: true,
 	},
@@ -36,11 +36,11 @@ module.exports = {
 			filename: path.join(path.dirname(__dirname), 'vultron.db')
 		},
 		migrations: {
-			directory: path.join(path.dirname(__dirname), 'app', 'database', 'migrations'),
+			directory: path.join(path.dirname(__dirname), 'database', 'migrations'),
 			tableName: 'migrations',
 		},
 		seeds: {
-			directory: path.join(path.dirname(__dirname), 'app', 'database', 'seeds'),
+			directory: path.join(path.dirname(__dirname), 'database', 'seeds'),
 		},
 		useNullAsDefault: true,
 	}

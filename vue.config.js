@@ -5,6 +5,7 @@ module.exports = {
 			builderOptions: {
 				extraResources: [
 					'app',
+					'database',
 					'vultron.db'
 				]
 			},
