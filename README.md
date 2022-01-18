@@ -114,8 +114,7 @@ Here's an example of passing data to a Vue template on page load.
 		created() { // This will be fired on page load.
 			this.$api.send('api.ping') // Call api endpoint
 
-			this.$api.on('api.ping', (args) => { // Runs when ipcRenderer responds
-				console.log(arg)
+			this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
 				this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
 			})
 		}
