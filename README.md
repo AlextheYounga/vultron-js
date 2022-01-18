@@ -67,7 +67,7 @@ const AuthController = {
 		{name: 'login', action: 'login'},
 	],
 
-	login: function (event, arg) {
+	login: function (args) {
 		User.verify(arg.username, arg.password).then(function (verified) {
 			event.reply('login', verified.toJSON()) // Send reply back using name of endpoint event
 		})
@@ -83,7 +83,7 @@ From the frontend you will use the this.$api global variable of ipcRenderer to f
 ```javascript
 this.$api.send('api.ping') // Call api endpoint
 
-this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
+this.$api.on('api.ping', (args) => { // Runs when ipcRenderer responds
 	console.log(arg)
 	this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
 })
@@ -111,7 +111,7 @@ Here's an example of passing data to a Vue template on page load.
 		created() { // This will be fired on page load.
 			this.$api.send('api.ping') // Call api endpoint
 
-			this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
+			this.$api.on('api.ping', (args) => { // Runs when ipcRenderer responds
 				console.log(arg)
 				this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
 			})
