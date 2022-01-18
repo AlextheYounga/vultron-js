@@ -2,7 +2,7 @@
 ## An Electron MVC for building desktop apps that makes sense
 #### [Electron](https://www.electronjs.org/) | [Vue3](https://v3.vuejs.org/) | [Knex](https://knexjs.org/) & [Bookshelf](https://bookshelfjs.org/) | [Tailwind](https://tailwindcss.com/)
 
-Vultron allows devs with an MVC background to jump right into making small-scale, non-enterprise desktop applications. Vultron handles the esoteric parts of Electron for you. It also allows you to use SQL databases with Electron, all wrapped in a framework that feels more like Rails or Laravel. 
+Vultron allows devs with an MVC background to jump right into making self-contained, desktop applications. Vultron handles the esoteric parts of Electron for you. It also allows you to use SQL databases with Electron, all wrapped in a framework that feels more like Rails or Laravel. 
 
 Databases are handled using [Knex](https://knexjs.org/) and [Bookshelf](https://bookshelfjs.org/), which can support Sqlite3, Mysql, and Postgres. 
 
