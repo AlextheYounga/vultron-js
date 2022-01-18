@@ -122,7 +122,7 @@
                     /*
                     * Electron ipcMain example 
                     */
-                    this.$api.on('login', (event, arg) => { //function that fires when a response is received from 'login' event
+                    this.$api.on('login', (arg) => { //function that fires when a response is received from 'login' event
                         let user = arg
                         if (!user) return
                         if (user instanceof Error) { // Error handling
