@@ -25,7 +25,7 @@ File structure:
 │   ├── modules
 │   └── server
 │       ├── api.js // Handles Electron's ipcMain functions
-|		├── routes.js // Place your API routes 
+|	├── routes.js // Place your API routes 
 │       └── controllers // Your controllers and controller actions will get compiled by api.js
 ├── database
 │   ├── bookshelf.js // Handles Bookshelf configs for models.
@@ -106,10 +106,10 @@ Here's an example of passing data to a Vue template on page load.
     export default {
         layout: App,
         data() {
-			return {
-				// The value should be instantiated here. If you work with Vue you should be used to doing that already.
-				apiValue: null, 
-			}
+		return {
+			// The value should be instantiated here. If you work with Vue you should be used to doing that already.
+			apiValue: null, 
+		}
         },
 		created() { // This will be fired on page load.
 			this.$api.send('api.ping') // Call api endpoint
