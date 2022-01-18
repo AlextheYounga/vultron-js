@@ -1,3 +1,9 @@
+/*
+* Place your API routes here using the prefix in the controller name as the keys.
+* Your controllers should be named like {yourname}_controller.js
+* You can add custom names to the routes that you can call on the front end. 
+* The action will correspond to a particular function in your controller. 
+*/
 const Routes = {
 	auth: [{ //grouping should match prefix of controller
 		name: 'login',
