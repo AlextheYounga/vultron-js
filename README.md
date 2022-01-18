@@ -25,6 +25,7 @@ File structure:
 │   ├── modules
 │   └── server
 │       ├── api.js // Handles Electron's ipcMain functions
+|		├── routes.js // Place your API routes 
 │       └── controllers // Your controllers and controller actions will get compiled by api.js
 ├── database
 │   ├── bookshelf.js // Handles Bookshelf configs for models.
@@ -58,18 +59,11 @@ The magic happens in the ```app/server``` folder, which use Electron's [ipcMain]
 You create your controllers with this strategy:
 ```javascript
 const User = require('../../models/User')
-const AuthController = {
-	/* Specify which actions here will be included in Electron's ipcMain module. 
-	 * The 'action' prop specifies which function to call, while the 'name' prop
-	 * sets the custom name of the endpoint, which is what you will call on the front-end.
-	 */
-	endpoints: [
-		{name: 'login', action: 'login'},
-	],
 
-	login: function (event, arg) {
-		User.verify(arg.username, arg.password).then(function (verified) {
-			event.reply('login', verified.toJSON()) // Send reply back using name of endpoint event
+const AuthController = {
+	login: function (event, creds) {
+		User.verify(creds.username, creds.password).then(function (verified) {
+			event.reply(event.routeName, verified.toJSON()) // Send reply back using name of endpoint event automatically stored in the event variable.
 		})
 	},
 }
@@ -77,13 +71,22 @@ const AuthController = {
 export default AuthController
 ```
 
-You place your functions in the controller object, and just specify which functions you want to appear as callable endpoints in Electron's ipcMain module. Any functions not listed in the endpoints array will not be sent to the api.
+You place your functions in the controller object, and you can specify your API routes in the server/routes.js file.
+
+```javascript
+const Routes = {
+	auth: [{ //grouping should match prefix of controller
+		name: 'login', //add custom names to the route
+		action: 'login' //corresponds to a function in your controller file.
+	}],
+}
+```
 
 From the frontend you will use the this.$api global variable of ipcRenderer to fire ipcMain events like this: 
 ```javascript
 this.$api.send('api.ping') // Call api endpoint
 
-this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
+this.$api.on('api.ping', (args) => { // Runs when ipcRenderer responds
 	console.log(arg)
 	this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
 })
@@ -103,16 +106,23 @@ Here's an example of passing data to a Vue template on page load.
     export default {
         layout: App,
         data() {
-		return {
-			// The value should be instantiated here. If you work with Vue you should be used to doing that already.
-			apiValue: null, 
+			return {
+				// The value should be instantiated here. If you work with Vue you should be used to doing that already.
+				apiValue: null, 
+			}
+        },
+		created() { // This will be fired on page load.
+			this.$api.send('api.ping') // Call api endpoint
+
+			this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
+				this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
+			})
 		}
 	},
 	created() { // This will be fired on page load.
 		this.$api.send('api.ping') // Call api endpoint
 
 		this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
-			console.log(arg)
 			this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
 		})
 	}
