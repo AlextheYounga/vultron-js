@@ -129,7 +129,7 @@ Your models are handled by a combination of [Knex JS](https://knexjs.org/) & [Bo
 const bookshelf = require('../database/config/bookshelf')
 const User = require('./User.js');
 
-// Bank Model that belongs to User
+// Account Model that belongs to User
 const Bank = {
 	model: bookshelf.Model.extend({
 		tableName: 'banks',

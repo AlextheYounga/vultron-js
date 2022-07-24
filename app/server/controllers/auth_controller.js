@@ -1,11 +1,9 @@
-const User = require('../../models/User')
+const Auth = require('../../middleware/auth/auth')
 
 const AuthController = {
-	login: function (event, creds) {
-		User.verify(creds.username, creds.password).then(function (verified) {
-			event.reply(event.routeName, verified.toJSON()) // Send reply back using name of endpoint event
-		})
+	login: async function (params) {
+		return Auth.login(params)
 	},
 }
 
-export default AuthController
+module.exports = AuthController

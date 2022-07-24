@@ -1,4 +1,4 @@
-// import session from '../middleware/session'
+// import session from '../middleware/auth/session'
 import {
 	createRouter,
 	createWebHistory
