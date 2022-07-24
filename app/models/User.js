@@ -1,49 +1,19 @@
-const bcrypt = require("bcryptjs");
-const Bank = require('./Bank.js');
-const bookshelf = require('../../database/bookshelf')
+const Database = require('../../database/database')
+const bookshelf = Database.bookshelf()
 
-const User = {
-	model: bookshelf.Model.extend({
-		tableName: 'users',
-		hidden: ['password'],
-		hashable: ['password'],
-		initialize: function () {
-			this.on('creating', this.hashAttributes, this);
-		},
-		hashAttributes: function (model) {
-			var hashAttrs = this.hashable
-			return new Promise(function (resolve, reject) {
-				for (var attr of hashAttrs) {
-					bcrypt.hash(model.attributes[attr], 10, function (err, hash) {
-						if (err) reject(err);
-						model.set(attr, hash);
-						resolve(hash); // data is created only after this occurs
-					});
-				}
-			});
-		},
-		banks: function () {
-			return this.hasMany(Bank);
-		},
-	}),
-	verify: async function (username, password) {
-		try {
-			return await this.model.where('username', username).fetch({
-				require: false
-			}).then((user) => {
-				if (!user) throw new Error('Username does not match');
-				if (user) {
-					if (bcrypt.compareSync(password, user.get('password'))) { //compare password
-						return user.toJSON()
-					}
-					throw new Error('Password does not match');
-				}
-				return
-			})
-		} catch (err) {
-			return err
-		}
+const User = bookshelf.model('User', {
+	tableName: 'users',
+	hidden: ['password', 'pin'],
+	hashable: ['password', 'pin'],
+	initialize: function () {
+		this.on('saving', this.hashAttributes, this);
 	},
-}
+	hashAttributes: function (model) {
+		return Database.encryptOnSave(model, this.hashable)
+	},
+	accounts: function () {
+		return this.hasMany(require('./Account'));
+	},
+})
 
 module.exports = User
