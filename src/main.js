@@ -15,7 +15,7 @@ import Helpers from '../app/modules/Helpers'
 const app = createApp(App).use(router)
 
 app.config.globalProperties.$http = () => axios
-app.config.globalProperties.$api = ipcRenderer
+app.config.globalProperties.$electron = ipcRenderer
 app.config.globalProperties.$schema = schema
 app.config.globalProperties.$helpers = Helpers
 
