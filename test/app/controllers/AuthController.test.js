@@ -1,3 +1,4 @@
+/* eslint-env jest */
 const User = require('../../../app/models/User')
 const AuthController = require('../../../app/controllers/AuthController.js')
 

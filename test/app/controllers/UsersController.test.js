@@ -1,3 +1,4 @@
+/* eslint-env jest */
 const UsersController = require('../../../app/controllers/UsersController.js')
 
 describe('UsersController', () => {

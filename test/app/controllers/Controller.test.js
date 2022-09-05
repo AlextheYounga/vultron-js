@@ -1,3 +1,4 @@
+/* eslint-env jest */
 const Controller = require('../../../app/controllers/Controller.js')
 
 describe('Controller', () => {

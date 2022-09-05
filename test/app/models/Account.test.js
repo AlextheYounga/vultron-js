@@ -1,3 +1,4 @@
+/* eslint-env jest */
 const Account = require('../../../app/models/Account')
 
 describe('Accounts', () => {
