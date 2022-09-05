@@ -1,7 +1,6 @@
 const trxs = require('../fixtures/db_transaction_records.json')
 const ledger = require('../../app/math/ledger')
 require('../../framework/Prototypes/math')
-require('../../framework/Prototypes/array')
 const util = require('util')
 
 describe('ledger', () => {
@@ -13,7 +12,7 @@ describe('ledger', () => {
                     let chunks = ledger.scaleChunks(trxs, key)
                     let periods = chunks.map(chunk => chunk.period.start)
 
-                    expect(periods).toHaveLength(periods.unique().length)
+                    expect(periods).toHaveLength(unique(periods).length)
                 }
             }
         })
