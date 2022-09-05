@@ -1,7 +1,6 @@
 const { session } = require('brownies');
 const { generateRandom } = require('../Helpers/string-helpers')
 const FileSessionHandler = require('./file-session-handler')
-var dayjs = require('dayjs')
 
 const SessionManager = {
     brownies: session,
@@ -39,21 +38,6 @@ const SessionManager = {
             }
         }
         return false
-    },
-    restore: function () {
-        let recent_sesh_data = FileSessionHandler.getLast()
-        if (recent_sesh_data) {
-            let now = dayjs(Date.now())
-            let last_activity = dayjs(recent_sesh_data.last_activity)
-            let expiration = last_activity.add(12, 'hours')
-
-            if (now >= expiration) {
-                return false
-            }
-            return recent_sesh_data
-        }
-        return false
-
     },
     destroy: function () {
         delete session.user

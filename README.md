@@ -82,11 +82,11 @@ const Routes = {
 }
 ```
 
-From the frontend you will use the this.$api global variable of ipcRenderer to fire ipcMain events like this: 
+From the frontend you will use the this.$electron global variable of ipcRenderer to fire ipcMain events like this: 
 ```javascript
-this.$api.send('api.ping') // Call api endpoint
+this.$electron.send('api.ping') // Call api endpoint
 
-this.$api.on('api.ping', (args) => { // Runs when ipcRenderer responds
+this.$electron.on('api.ping', (args) => { // Runs when ipcRenderer responds
 	console.log(arg)
 	this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
 })
@@ -112,9 +112,9 @@ Here's an example of passing data to a Vue template on page load.
 			}
         },
 		created() { // This will be fired on page load.
-			this.$api.send('api.ping') // Call api endpoint
+			this.$electron.send('api.ping') // Call api endpoint
 
-			this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
+			this.$electron.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
 				this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
 			})
 		}
@@ -179,7 +179,7 @@ I have included a few global variables you can use by default in main.js:
 
 ```javascript
 app.config.globalProperties.$http = () => axios
-app.config.globalProperties.$api = ipcRenderer
+app.config.globalProperties.$electron = ipcRenderer
 app.config.globalProperties.$schema = schema
 app.config.globalProperties.$helpers = Helpers
 

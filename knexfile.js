@@ -1,47 +1,48 @@
 const path = require("path")
 
 module.exports = {
-	development: {
+	testing: {
 		client: 'sqlite3',
 		connection: {
-			filename: path.join(path.dirname(__dirname), 'vultron.db')
+			directory: path.resolve('test/database'),
+			filename: 'vultron_test.db'
 		},
 		migrations: {
-			directory: path.join(path.dirname(__dirname), 'database', 'migrations'),
+			directory: path.resolve('./database/migrations'),
 			tableName: 'migrations',
 		},
 		seeds: {
-			directory: path.join(path.dirname(__dirname), 'database', 'seeds'),
+			directory: path.resolve('./database/seeds'),
 		},
 		useNullAsDefault: true,
 	},
-
-	staging: {
+	development: {
 		client: 'sqlite3',
 		connection: {
-			filename: path.join(path.dirname(__dirname), 'vultron.db')
+			filename: 'vultron.db'
 		},
 		migrations: {
-			directory: path.join(path.dirname(__dirname), 'database', 'migrations'),
+			directory: path.resolve('./database/migrations'),
 			tableName: 'migrations',
 		},
 		seeds: {
-			directory: path.join(path.dirname(__dirname), 'database', 'seeds'),
+			directory: path.resolve('./database/seeds'),
 		},
 		useNullAsDefault: true,
 	},
 	production: {
 		client: 'sqlite3',
 		connection: {
-			filename: path.join(path.dirname(__dirname), 'vultron.db')
+			filename: 'vultron.db'
 		},
 		migrations: {
-			directory: path.join(path.dirname(__dirname), 'database', 'migrations'),
+			directory: path.resolve('./database/migrations'),
 			tableName: 'migrations',
 		},
 		seeds: {
-			directory: path.join(path.dirname(__dirname), 'database', 'seeds'),
+			directory: path.resolve('./database/seeds'),
 		},
 		useNullAsDefault: true,
 	}
 }
+

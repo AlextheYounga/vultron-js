@@ -6,17 +6,17 @@ import {
 const store = createStore({
 	state() {
 		return {
-			importData: {} // Data from file imported
+			someState: {} // Data from file imported
 		}
 	},
 	mutations: {
-		setImportData(state, payload) {
-			state.importData = payload
+		setSomeState(state, payload) {
+			state.someState = payload
 		}
 	},
 	getters: {
-		getImportData(state) {
-			return state.importData;
+		getSomeState(state) {
+			return state.someState;
 		}
 	}
 })

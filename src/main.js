@@ -1,22 +1,20 @@
-import {
-	createApp
-} from 'vue'
+import { createApp } from 'vue'
+const { ipcRenderer } = require('electron')
 import App from './App.vue'
+import { createVueWait } from 'vue-wait'
 import router from './router'
 import './assets/tailwind.css'
-const axios = require('axios')
-const {
-	ipcRenderer
-} = require('electron')
-const schema = require('../database/schema.json');
-import Helpers from '../app/modules/Helpers'
+const schema = require('../database/schema.json')
+const SessionManager = require('../framework/Session/session-manager')
 
-// Creates db if db does not exist.
-const app = createApp(App).use(router)
+const VueWait = createVueWait()
 
-app.config.globalProperties.$http = () => axios
+const app = createApp(App)
+	.use(VueWait)
+	.use(router)
+
 app.config.globalProperties.$electron = ipcRenderer
 app.config.globalProperties.$schema = schema
-app.config.globalProperties.$helpers = Helpers
+app.config.globalProperties.$session = SessionManager
 
 app.mount('#app')

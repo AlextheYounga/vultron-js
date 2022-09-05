@@ -46,16 +46,7 @@ router.beforeEach(async (to) => {
 	if (to.meta.requiresAuth) {
 		let validSession = await SessionManager.validate()
 		if (!validSession) {
-			let restoreSession = await SessionManager.restore()
-			if (restoreSession.id) {
-				return redirectAuth(to, '/soft-login', restoreSession.id)
-			}
 			return redirectAuth(to, '/login')
-		}
-	}
-	if (to.path == '/') {
-		return {
-			path: '/dashboard'
 		}
 	}
 })
