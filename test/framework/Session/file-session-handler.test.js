@@ -1,3 +1,4 @@
+/* eslint-env jest */
 const fs = require("fs");
 const path = require("path")
 const FileSessionHandler = require('../../../framework/Session/file-session-handler')
