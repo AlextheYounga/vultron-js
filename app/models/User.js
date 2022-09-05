@@ -1,5 +1,6 @@
-const Database = require('../../database/database')
-const bookshelf = Database.bookshelf()
+const DBConnection = require('../../framework/Database/dbconnection')
+const bookshelf = DBConnection.bookshelf()
+const encryptOnSave = require('../../framework/Database/encrypt-on-save')
 
 const User = bookshelf.model('User', {
 	tableName: 'users',
@@ -9,7 +10,7 @@ const User = bookshelf.model('User', {
 		this.on('saving', this.hashAttributes, this);
 	},
 	hashAttributes: function (model) {
-		return Database.encryptOnSave(model, this.hashable)
+		return encryptOnSave(model, this.hashable)
 	},
 	accounts: function () {
 		return this.hasMany(require('./Account'));
