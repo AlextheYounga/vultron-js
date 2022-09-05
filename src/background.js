@@ -12,10 +12,11 @@ import {
 import installExtension, {
 	VUEJS3_DEVTOOLS
 } from 'electron-devtools-installer'
-import api from '../app/server/api'
+import electronIpsApi from '../framework/Electron/ips-api'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const fs = require("fs");
-const database = require('../database/database')
+const DatabaseConnection = require('../framework/Database/dbconnection')
+const Schema = require('../framework/Database/schema')
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{
@@ -28,7 +29,7 @@ protocol.registerSchemesAsPrivileged([{
 
 
 // Load Custom Api Endpoints
-api.load()
+electronIpsApi.load()
 
 async function createWindow() {
 	// Create the browser window.
@@ -107,10 +108,11 @@ if (isDevelopment) {
 
 
 // Database Functions
-if (fs.existsSync(database.dbConfig.connection.filename)) {
+const dbPath = DatabaseConnection.instance().dbPath // path to db
+if (fs.existsSync(dbPath)) { 
 	// Build Schema
 	try {
-		database.buildSchema()
+		Schema.build()
 	} catch (err) {
 		console.log(err)
 	}

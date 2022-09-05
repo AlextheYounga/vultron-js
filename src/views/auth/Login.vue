@@ -1,8 +1,8 @@
 <template>
-    <div class="min-h-screen bg-dark-mode-light flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8">
             <div>
-                <h1 class="text-gold text-4xl">Vultron JS</h1>
+                <h1 class="text-indigo-700 text-4xl text-center">Vultron</h1>
                 <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-100">
                     Sign in to your account
                 </h2>
@@ -20,19 +20,19 @@
                 <div class="rounded-md shadow-sm -space-y-px">
                     <div>
                         <label
-                            for="username"
+                            for="email"
                             class="sr-only"
-                        >Username</label>
+                        >Email</label>
                         <input
-                            v-model="form.username"
-                            id="username"
-                            name="username"
-                            autocomplete="username"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-yellow-300 focus:border-yellow-300 focus:z-10 sm:text-sm"
-                            placeholder="Username"
+                            v-model="form.email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:z-10 sm:text-sm"
+                            placeholder="Email"
                         />
                     </div>
-                    <VuelidateMessage v-model="v$.form.username" />
+                    <VuelidateMessage v-model="v$.form.email" />
                     <div>
                         <label
                             for="password"
@@ -44,7 +44,7 @@
                             name="password"
                             type="password"
                             autocomplete="current-password"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-yellow-300 focus:border-yellow-300 focus:z-10 sm:text-sm"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:z-10 sm:text-sm"
                             placeholder="Password"
                         />
                     </div>
@@ -52,17 +52,25 @@
 
                 </div>
 
-                <div v-if="notFound">
-                    <p class="text-red-500">{{ notFound }}</p>
+                <div v-if="errorMsg">
+                    <p class="text-red-500">{{ errorMsg }}</p>
                 </div>
 
                 <div class="flex items-center justify-between">
                     <div class="text-sm">
                         <a
                             href="#"
-                            class="font-medium text-gold hover:text-yellow-300"
+                            class="font-medium text-indigo-700"
                         >
                             Forgot your password?
+                        </a>
+                    </div>
+                    <div class="text-sm">
+                        <a
+                            href="#"
+                            class="font-medium text-indigo-700"
+                        >
+                            Register
                         </a>
                     </div>
                 </div>
@@ -70,7 +78,7 @@
                 <div>
                     <button
                         type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-800 bg-gold hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300"
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-800 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2"
                     >
                         <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                             <LockClosedIcon
@@ -101,16 +109,16 @@
         data() {
             return {
                 form: {
-                    username: null,
+                    email: null,
                     password: null,
                 },
-                notFound: false,
+                errorMsg: false,
             }
         },
         validations() {
             return {
                 form: {
-                    username: { required },
+                    email: { required },
                     password: { required },
                 }
             }
@@ -119,26 +127,25 @@
             async submit() {
                 const isFormCorrect = await this.v$.$validate()
                 if (isFormCorrect) {
-                    /*
-                    * Electron ipcMain example 
-                    */
-                    this.$api.on('login', (event, arg) => { //function that fires when a response is received from 'login' event
-                        let user = arg
-                        if (!user) return
-                        if (user instanceof Error) { // Error handling
-                            this.$data.notFound = user.message
-                            return
-                        }
-                        if (user.id) {
-                            this.$router.push('dashboard') // Go to dashboard
-                        }
-                    })
-                    this.$api.send('login', {  // fire login call to ipcMain
-                        username: this.$data.form.username,
-                        password: this.$data.form.password
-                    })
+                    let creds = { ...this.$data.form }
+                    this.login(creds)
                 }
+            },
+            async login(creds) {
+                this.$electron.invoke('auth.login', creds).then((user) => {
+                    if (!user) {
+                        this.$data.errorMsg = 'Unknown login error'
+                        return
+                    }
+                    if (user instanceof Error) {
+                        this.$data.errorMsg = user.message
+                        return
+                    }
+                    if (user.id && this.$session.set(user.id)) {
+                        this.$router.push('dashboard')
+                    }
+                })
             }
-        }
+        },
     }
 </script>
