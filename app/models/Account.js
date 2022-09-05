@@ -1,5 +1,5 @@
-const Database = require('../../database/database')
-const bookshelf = Database.bookshelf()
+const DBConnection = require('../../framework/Database/dbconnection')
+const bookshelf = DBConnection.bookshelf()
 
 
 const Account = bookshelf.model('Account', {
