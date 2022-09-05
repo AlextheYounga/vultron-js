@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path")
-require('../Prototypes/object')
+const { getKeyByValue } = require('../Helpers/object-helpers')
 
 const FileSessionHandler = {
     storagePath: function () {
@@ -45,7 +45,7 @@ const FileSessionHandler = {
                 }
             }
             let max = Math.max(...Object.values(session_timestamps))
-            return this.read(session_timestamps.getKeyByValue(max))
+            return this.read(getKeyByValue(session_timestamps, max))
         }
         return null
     }

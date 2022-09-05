@@ -1,6 +1,5 @@
 const fs = require("fs")
 const ProcessTransactions = require('../../../app/modules/process-transactions')
-require('../../../framework/Prototypes/array')
 require('../../../framework/Prototypes/string')
 
 describe('ProcessTransactions', () => {
