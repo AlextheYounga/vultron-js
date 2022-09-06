@@ -1,13 +1,16 @@
 const bcrypt = require("bcryptjs");
 const Encrypt = {
+	saltRounds: 10,
 	hash: async function (value) {
-		const SALT_ROUNDS = 10
 		return new Promise(function (resolve, reject) {
-			bcrypt.hash(value, SALT_ROUNDS, function (err, hash) {
+			bcrypt.hash(value, this.saltRounds, function (err, hash) {
 				if (err) reject(err);
 				resolve(hash); // data is created only after this occurs
 			});
 		})
+	},
+	hashSync: function(value) {
+		return bcrypt.hashSync(value, this.saltRounds)
 	},
 	compare: async function (value, hash) {
 		return await bcrypt.compare(value, hash).then((res) => {

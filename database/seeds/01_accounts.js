@@ -4,11 +4,11 @@ exports.seed = function (knex) {
 		const Account = require('../../app/models/Account')
 		const User = require('../../app/models/User')
 		// Fetching user id
-		return User.where({email: 'alex@vultronjs.com'}).fetch({
+		return User.where({email: 'alex@alextheyounger.me'}).fetch({
 			require: false
 		}).then((user) => {
 			// Inserts seed entries
-			return Account.new({
+			return Account.forge({
 				user_id: user.id,
 				name: 'Chase Checkings',
 				institution: 'Chase',
@@ -17,6 +17,8 @@ exports.seed = function (knex) {
 				currency: 'USD',
 			}).save().then(function () {
 				console.log('Account model has been saved');
+			}).catch((error) => {
+				console.log(error)
 			})
 		})
 	});

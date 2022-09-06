@@ -6,12 +6,13 @@ const UsersController = {
 			.fetch({ require: false })
 			.then((user) => {
 				if (user) return user.toJSON()
-				return User.forge({
+				return new User({
 					name: 'Alex Younger',
 					username: 'alex',
 					password: 'password',
 					email: 'alex@alextheyounger.me'
-				}).save().then(function (user) {
+				}).save()
+				.then(function (user) {
 					console.log('User model has been saved');
 					return user.toJSON()
 				}).catch((error) => {
@@ -21,4 +22,4 @@ const UsersController = {
 	}
 }
 
-export default UsersController
+module.exports = UsersController

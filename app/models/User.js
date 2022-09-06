@@ -4,8 +4,8 @@ const encryptOnSave = require('../../framework/Database/encrypt-on-save')
 
 const User = bookshelf.model('User', {
 	tableName: 'users',
-	hidden: ['password', 'pin'],
-	hashable: ['password', 'pin'],
+	hidden: ['password'],
+	hashable: ['password'],
 	initialize: function () {
 		this.on('saving', this.hashAttributes, this);
 	},

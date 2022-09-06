@@ -3,7 +3,7 @@ const Channels = [
 	{
 		name: 'auth.login',
 		controller: 'AuthController',
-		action: 'offlineLogin'
+		action: 'login'
 	},
 	// Accounts
 	{
