@@ -12,10 +12,14 @@ import {
 import installExtension, {
 	VUEJS3_DEVTOOLS
 } from 'electron-devtools-installer'
-import api from '../app/server/api'
+import ElectronApi from '../framework/Electron/ipc-api'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const fs = require("fs");
-const database = require('../database/database')
+const DatabaseConnection = require('../framework/Database/dbconnection')
+const Schema = require('../framework/Database/schema')
+
+// Load Custom Api Endpoints
+ElectronApi.load() 
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{
@@ -26,9 +30,6 @@ protocol.registerSchemesAsPrivileged([{
 	}
 }])
 
-
-// Load Custom Api Endpoints
-api.load()
 
 async function createWindow() {
 	// Create the browser window.
@@ -42,6 +43,7 @@ async function createWindow() {
 		webPreferences: {
 			// Use pluginOptions.nodeIntegration, leave this alone
 			// See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+			enableRemoteModule: true,
 			nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
 			contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
 		}
@@ -57,7 +59,6 @@ async function createWindow() {
 		// Load the index.html when not in development
 		mainWindow.loadURL('app://./index.html')
 	}
-
 }
 
 // Quit when all windows are closed.
@@ -107,10 +108,11 @@ if (isDevelopment) {
 
 
 // Database Functions
-if (fs.existsSync(database.dbConfig.connection.filename)) {
+const dbPath = DatabaseConnection.instance().dbPath // path to db
+if (fs.existsSync(dbPath)) { 
 	// Build Schema
 	try {
-		database.buildSchema()
+		Schema.build()
 	} catch (err) {
 		console.log(err)
 	}

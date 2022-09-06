@@ -3,8 +3,8 @@
         <div class="max-w-md w-full space-y-8">
             <div>
                 <h1 class="text-indigo-700 text-4xl text-center">Vultron</h1>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-600">
-                    Sign in to your account
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-100">
+                    Create a New Account
                 </h2>
             </div>
             <form
@@ -20,6 +20,36 @@
                 <div class="rounded-md shadow-sm -space-y-px">
                     <div>
                         <label
+                            for="name"
+                            class="sr-only"
+                        >Name</label>
+                        <input
+                            v-model="form.name"
+                            id="name"
+                            name="name"
+                            autocomplete="name"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:z-10 sm:text-sm"
+                            placeholder="Name"
+                        />
+                    </div>
+                    <VuelidateMessage v-model="v$.form.name" />
+                    <div>
+                        <label
+                            for="username"
+                            class="sr-only"
+                        >Username</label>
+                        <input
+                            v-model="form.username"
+                            id="username"
+                            name="username"
+                            autocomplete="username"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:z-10 sm:text-sm"
+                            placeholder="Username"
+                        />
+                    </div>
+                    <VuelidateMessage v-model="v$.form.username" />
+                    <div>
+                        <label
                             for="email"
                             class="sr-only"
                         >Email</label>
@@ -28,7 +58,7 @@
                             id="email"
                             name="email"
                             autocomplete="email"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:z-10 sm:text-sm"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:z-10 sm:text-sm"
                             placeholder="Email"
                         />
                     </div>
@@ -44,11 +74,27 @@
                             name="password"
                             type="password"
                             autocomplete="current-password"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:z-10 sm:text-sm"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:z-10 sm:text-sm"
                             placeholder="Password"
                         />
                     </div>
                     <VuelidateMessage v-model="v$.form.password" />
+                    <div>
+                        <label
+                            for="password_confirmation"
+                            class="sr-only"
+                        >Password Confirmation</label>
+                        <input
+                            v-model="form.password_confirmation"
+                            id="password"
+                            name="password_confirmation"
+                            type="password"
+                            autocomplete="current-password"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:z-10 sm:text-sm"
+                            placeholder="Password Confirmation"
+                        />
+                    </div>
+                    <VuelidateMessage v-model="v$.form.password_confirmation" />
 
                 </div>
 
@@ -66,19 +112,19 @@
                         </a>
                     </div>
                     <div class="text-sm">
-                        <a
-                            href="#"
+                        <router-link
                             class="font-medium text-indigo-700"
-                        >
-                            Register
-                        </a>
+                            to="login"
+                        >Login
+                        </router-link>
                     </div>
+
                 </div>
 
                 <div>
                     <button
                         type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-800 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-800 bg-indigo-700 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2"
                     >
                         <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                             <LockClosedIcon
@@ -98,7 +144,7 @@
     import { LockClosedIcon } from '@heroicons/vue/solid'
     import useVuelidate from '@vuelidate/core'
     import VuelidateMessage from '@/components/errors/VuelidateMessage.vue'
-    import { required } from '@vuelidate/validators'
+    import { required, sameAs } from '@vuelidate/validators'
 
     export default {
         components: {
@@ -109,8 +155,11 @@
         data() {
             return {
                 form: {
+                    name: null,
+                    username: null,
                     email: null,
                     password: null,
+                    password_confirmation: null,
                 },
                 errorMsg: false,
             }
@@ -118,8 +167,14 @@
         validations() {
             return {
                 form: {
+                    name: { required },
+                    username: { required },
                     email: { required },
                     password: { required },
+                    password_confirmation: {
+                        required,
+                        sameAsPassword: sameAs(this.form.password)
+                    },
                 }
             }
         },
@@ -128,13 +183,13 @@
                 const isFormCorrect = await this.v$.$validate()
                 if (isFormCorrect) {
                     let creds = { ...this.$data.form }
-                    this.login(creds)
+                    this.register(creds)
                 }
             },
-            async login(creds) {
-                this.$electron.invoke('auth.login', creds).then((user) => {
+            async register(creds) {
+                this.$electron.invoke('auth.register', creds).then((user) => {
                     if (!user) {
-                        this.$data.errorMsg = 'Unknown login error'
+                        this.$data.errorMsg = 'Unknown registration error'
                         return
                     }
                     if (user instanceof Error) {
