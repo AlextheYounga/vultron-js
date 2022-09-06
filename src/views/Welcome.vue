@@ -19,11 +19,6 @@
                             </span>
                         </router-link>
                         <button
-                            @click="userCreate()"
-                            class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white my-1"
-                        >Create Test User
-                        </button>
-                        <button
                             @click="pingApi()"
                             class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white my-1"
                         >Ping Electron IPS API
@@ -67,7 +62,6 @@
             return {
                 // The value should be instantiated here. If you work with Vue you should be used to doing that already.
                 ping: null,
-                user: null,
             }
         },
         methods: {
@@ -77,12 +71,6 @@
                     this.$data.ping = pinged
                 });
             },
-            userCreate() {
-                return this.$electron.invoke("users.create").then((user) => {
-                    console.log(user)
-                    this.$data.user = user
-                });
-            }
         }
 
     }

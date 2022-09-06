@@ -14,8 +14,7 @@ const AccountsController = {
 		})
 	},
 	create: function (data) {
-		return Account.new(data).save().then(function (account) {
-			console.log('Account model has been saved');
+		return Account.forge(data).save().then(function (account) {
 			return account.toJSON()
 		}).catch(function (error) {
 			return error

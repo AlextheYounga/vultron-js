@@ -16,12 +16,6 @@ const Channels = [
 		controller: 'AccountsController',
 		action: 'create'
 	},
-	// Users
-	{
-		name: 'users.create',
-		controller: 'UsersController',
-		action: 'create'
-	},
 	//Controller
 	{
 		name: 'controller.ping',
