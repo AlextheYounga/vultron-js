@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 
 async function encryptOnSave(model, hashable) {
 	const SALT_ROUNDS = 10
-	if (Object.keys(model.attributes).some(r => hashable.includes(r))) return
+	if (!Object.keys(model.attributes).some(r => hashable.includes(r))) return
 	return new Promise(function (resolve, reject) {
 		for (let attr of hashable) {
 			let modelValue = model.attributes[attr]
