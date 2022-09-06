@@ -6,7 +6,7 @@ module.exports = {
 				extraResources: [
 					'app',
 					'database',
-					'vultron.db'
+					'framework'
 				]
 			},
 			externals: ['sqlite3', 'knex', 'bookshelf'],
