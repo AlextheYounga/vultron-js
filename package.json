@@ -1,8 +1,17 @@
 {
-  "name": "lucriv-js",
+  "name": "vultron-js",
   "author": "Alex Younger <@alex@alextheyounger.me> (https://www.alextheyounger.me/)",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "keywords": [
+    "electron",
+    "vue",
+    "bookshelf",
+    "knex",
+    "sql",
+    "mvc",
+    "framework"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
