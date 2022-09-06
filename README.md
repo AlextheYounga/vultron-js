@@ -24,7 +24,7 @@ File structure:
 ```
 ├── app
 │   ├── config
-│		├── api.js // External API configurations
+│	├── api.js // External API configurations
 │       └── channels.js // Place controllers and actions you want to be recognized by Electrons Ipc API
 │   ├── controllers // Your controllers and controller actions will get compiled by framework/Electron/ipc-api.js
 │   └── models
@@ -117,18 +117,18 @@ Here's an example of passing data to a Vue template on page load.
     export default {
         layout: App,
         data() {
-			return {
-				// The value should be instantiated here. If you work with Vue you should be used to doing that already.
-				dataFromBackend: null, 
-			}
-        },
-		created() { // This will be fired on page load.
-			return this.$electron.invoke("controller.ping").then((pinged) => {
-				console.log(pinged)
-				this.$data.dataFromBackend = pinged
-			});
+		return {
+			// The value should be instantiated here. If you work with Vue you should be used to doing that already.
+			dataFromBackend: null, 
 		}
+        },
+	created() { // This will be fired on page load.
+		return this.$electron.invoke("controller.ping").then((pinged) => {
+			console.log(pinged)
+			this.$data.dataFromBackend = pinged
+		});
 	}
+}
 </script>
 ```
 
