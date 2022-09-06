@@ -22,10 +22,6 @@ const API = {
 				}
 			})
 	},
-
-	register: async function () {
-		// Your registration process here
-	},
 }
 
 module.exports = API

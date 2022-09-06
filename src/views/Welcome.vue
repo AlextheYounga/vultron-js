@@ -6,19 +6,9 @@
                 <div class="text-center">
                     <h1 class="mt-2 text-4xl font-extrabold text-indigo-700 tracking-tight sm:text-5xl">Vultron JS</h1>
                     <p class="mt-2 text-base text-gray-600">Electron | Vue | Knex & Bookshelf | SQL | Tailwind | MVC</p>
-                    <div class="flex justify-center mt-6 w-1/3 mx-auto">
-                        <button
-                            @click="pingApi()"
-                            class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white w-24"
-                        >Ping Electron IPS API
-                        </button>
-                        <button
-                            @click="userCreate()"
-                            class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white w-24"
-                        >Create User
-                        </button>
+                    <div class="mt-6 w-1/3 mx-auto">
                         <router-link
-                            class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white w-24"
+                            class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white my-1 w-24"
                             to="/login"
                         >Login
                             <span>
@@ -28,7 +18,16 @@
                                 />
                             </span>
                         </router-link>
-
+                        <button
+                            @click="userCreate()"
+                            class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white my-1"
+                        >Create Test User
+                        </button>
+                        <button
+                            @click="pingApi()"
+                            class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white my-1"
+                        >Ping Electron IPS API
+                        </button>
                     </div>
                     <p
                         v-if="ping"

@@ -3,7 +3,7 @@
         <div class="max-w-md w-full space-y-8">
             <div>
                 <h1 class="text-indigo-700 text-4xl text-center">Vultron</h1>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-100">
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-600">
                     Sign in to your account
                 </h2>
             </div>

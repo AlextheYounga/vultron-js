@@ -1,4 +1,4 @@
-const Auth = require('../middleware/auth/auth')
+const Auth = require('../../framework/Auth/auth')
 
 const AuthController = {
 	login: async function (params) {
