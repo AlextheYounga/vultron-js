@@ -2,7 +2,7 @@
 ## An Electron MVC for building desktop apps that makes sense
 #### [Electron](https://www.electronjs.org/) | [Vue3](https://v3.vuejs.org/) | [Knex](https://knexjs.org/) & [Bookshelf](https://bookshelfjs.org/) | [Tailwind](https://tailwindcss.com/)
 
-Vultron handles the esoteric parts of Electron for you. It also allows you to use SQL databases with Electron, all wrapped in a framework that feels more like Rails or Laravel. 
+Vultron allows devs with an MVC background to jump right into making self-contained, desktop applications. Vultron handles the esoteric parts of Electron for you. It also allows you to use SQL databases with Electron, all wrapped in a framework that feels more like Rails or Laravel. 
 
 Databases are handled using [Knex](https://knexjs.org/) and [Bookshelf](https://bookshelfjs.org/), which can support Sqlite3, Mysql, and Postgres. 
 
@@ -93,7 +93,6 @@ module.exports = Channels
 ```
 
 ## Fetching Data from Backend to Frontend
-
 From the frontend you will use the `this.$electron` global variable of ipcRenderer to fire ipcMain events like this: 
 ```javascript
 pingApi() {
@@ -129,10 +128,9 @@ Here's an example of passing data to a Vue template on page load.
 				this.$data.dataFromBackend = pinged
 			});
 		}
-    };
+	}
 </script>
 ```
-
 
 ## Models
 Your models are handled by a combination of [Knex JS](https://knexjs.org/) & [Bookshelf JS](https://bookshelfjs.org/), (which is an extension of knex). If you come from a Laravel/Rails background, this is surely more familiar than the normal messiness of the common Javascript frameworks.

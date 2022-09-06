@@ -21,7 +21,7 @@
                         <button
                             @click="pingApi()"
                             class="bg-indigo-600 flex font-medium hover:text-indigo-500 items-center justify-evenly mx-auto p-2 rounded text-base text-white my-1"
-                        >Ping Electron IPS API
+                        >Ping Electron IPC API
                         </button>
                     </div>
                     <p
@@ -67,7 +67,6 @@
         methods: {
             pingApi() {
                 return this.$electron.invoke("controller.ping").then((pinged) => {
-                    console.log(pinged)
                     this.$data.ping = pinged
                 });
             },
