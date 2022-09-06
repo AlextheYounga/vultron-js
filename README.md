@@ -93,7 +93,6 @@ module.exports = Channels
 ```
 
 ## Fetching Data from Backend to Frontend
-
 From the frontend you will use the `this.$electron` global variable of ipcRenderer to fire ipcMain events like this: 
 ```javascript
 pingApi() {
@@ -129,18 +128,9 @@ Here's an example of passing data to a Vue template on page load.
 				this.$data.dataFromBackend = pinged
 			});
 		}
-	},
-	created() { // This will be fired on page load.
-		this.$api.send('api.ping') // Call api endpoint
-
-		this.$api.on('api.ping', (event, arg) => { // Runs when ipcRenderer responds
-			this.$data.apiValue = arg // This will change the value of apiValue as soon as it returns.
-		})
 	}
-    };
 </script>
 ```
-
 
 ## Models
 Your models are handled by a combination of [Knex JS](https://knexjs.org/) & [Bookshelf JS](https://bookshelfjs.org/), (which is an extension of knex). If you come from a Laravel/Rails background, this is surely more familiar than the normal messiness of the common Javascript frameworks.
